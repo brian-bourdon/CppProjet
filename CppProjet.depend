@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1560422254 source:e:\myspace\cours_master\c++\cppprojet\main.cpp
+1560424880 source:e:\myspace\cours_master\c++\cppprojet\main.cpp
 	<iostream>
+	<SFML/Window.hpp>
+	<SFML/System.hpp>
 	<SFML/Graphics.hpp>
 
 1525819220 e:\myspace\cours_master\c++\cppprojet\sfml-2.5.1\include\sfml\graphics.hpp
