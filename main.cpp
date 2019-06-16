@@ -1,9 +1,4 @@
-#include <iostream>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-
-using namespace std;
 
 int main()
 {
@@ -25,7 +20,5 @@ int main()
         window.display();
     }
 
-    return 0;
-    cout << "Hello world!" << endl;
     return 0;
 }
