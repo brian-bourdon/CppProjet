@@ -7,7 +7,7 @@ const float Game::PlayerSpeed = 100.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Game::Game()
-	: mWindow(sf::VideoMode(840, 600), "Space Invaders 1978", sf::Style::Close)
+	: mWindow(sf::VideoMode(1240, 600), "Zaxxon", sf::Style::Close)
 	, mTexture()
 	, mPlayer()
 	, mFont()
@@ -24,7 +24,7 @@ Game::Game()
 	_TextureWeapon.loadFromFile("Media/Textures/SI_WeaponGreen.png");
 	_TextureWeaponEnemy.loadFromFile("Media/Textures/SI_WeaponYellow.png");
 	_TextureWeaponEnemyMaster.loadFromFile("Media/Textures/SI_WeaponRed.png");
-	mTexture.loadFromFile("Media/Textures/SI_Player.png");
+	mTexture.loadFromFile("Media/Textures/fly.jpg");
 	_TextureEnemyMaster.loadFromFile("Media/Textures/SI_EnemyMaster.png");
 	_TextureEnemy.loadFromFile("Media/Textures/SI_Enemy.png");
 	_TextureBlock.loadFromFile("Media/Textures/SI_Block.png");
@@ -60,7 +60,7 @@ void Game::InitSprites()
 	//
 
 	mPlayer.setTexture(mTexture);
-	mPlayer.setPosition(100.f, 500.f);
+	mPlayer.setPosition(100.f, 250.f);
 	std::shared_ptr<Entity> player = std::make_shared<Entity>();
 	player->m_sprite = mPlayer;
 	player->m_type = EntityType::player;
@@ -90,7 +90,7 @@ void Game::InitSprites()
 		for (int j = 0; j < SPRITE_COUNT_Y; j++)
 		{
 			_Enemy[i][j].setTexture(_TextureEnemy);
-			_Enemy[i][j].setPosition(100.f + 50.f * (i + 1), 10.f + 50.f * (j + 1));
+			_Enemy[i][j].setPosition(900.f + 50.f * (j + 1), 50.f * (i + 1));
 
 			std::shared_ptr<Entity> se = std::make_shared<Entity>();
 			se->m_sprite = _Enemy[i][j];
@@ -105,7 +105,7 @@ void Game::InitSprites()
 	// Blocks
 	//
 
-	for (int i = 0; i < BLOCK_COUNT; i++)
+	/*for (int i = 0; i < BLOCK_COUNT; i++)
 	{
 		_Block[i].setTexture(_TextureBlock);
 		_Block[i].setPosition(0.f + 150.f * (i + 1), 10 + 350.f);
@@ -117,6 +117,7 @@ void Game::InitSprites()
 		sb->m_position = _Block[i].getPosition();
 		EntityManager::m_Entities.push_back(sb);
 	}
+	*/
 
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setPosition(5.f, 5.f);
@@ -944,7 +945,7 @@ void Game::HandleGameOver()
 	}
 }
 
-void Game::DisplayGameOver()
+void Game::DisplayGameOver() 
 {
 	if (_lives == 0)
 	{

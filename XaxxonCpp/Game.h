@@ -1,8 +1,8 @@
 #pragma once
 #include "Weapon.h"
 
-#define SPRITE_COUNT_X 11
-#define SPRITE_COUNT_Y 5
+#define SPRITE_COUNT_X 10
+#define SPRITE_COUNT_Y 1
 #define BLOCK_COUNT 4
 
 class Game
