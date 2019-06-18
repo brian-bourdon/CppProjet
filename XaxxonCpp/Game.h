@@ -78,5 +78,6 @@ private:
 	sf::Sprite	_Weapon;
 	sf::Texture	_TextureEnemyMaster;
 	sf::Sprite	_EnemyMaster;
+	sf::Texture	_Map;
 };
 

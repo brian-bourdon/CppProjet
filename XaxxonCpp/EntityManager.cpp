@@ -42,3 +42,21 @@ std::shared_ptr<Entity> EntityManager::GetEnemyMaster()
 
 	return nullptr;
 }
+
+std::shared_ptr<Entity> EntityManager::GetMap()
+{
+	for (std::shared_ptr<Entity> entity : EntityManager::m_Entities)
+	{
+		if (entity->m_enabled == false)
+		{
+			continue;
+		}
+
+		if (entity->m_type == EntityType::map)
+		{
+			return entity;
+		}
+	}
+
+	return nullptr;
+}
