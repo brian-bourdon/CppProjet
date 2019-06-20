@@ -372,9 +372,9 @@ void Game::HanldeEnemyMasterWeaponMoves()
 		float x, y;
 		x = entity->m_sprite.getPosition().x;
 		y = entity->m_sprite.getPosition().y;
-		y++;
+		x--;
 
-		if (y >= 600)
+		if (x <= 0)
 		{
 			entity->m_enabled = false;
 			_IsEnemyMasterWeaponFired = false;
@@ -446,7 +446,7 @@ void Game::HandleCollisionEnemyMasterWeaponBlock()
 
 			sf::FloatRect boundBlock;
 			boundBlock = block->m_sprite.getGlobalBounds();
-
+			/*
 			if (boundWeapon.intersects(boundBlock) == true)
 			{
 				weapon->m_enabled = false;
@@ -454,6 +454,7 @@ void Game::HandleCollisionEnemyMasterWeaponBlock()
 				//break;
 				goto end2;
 			}
+			*/
 		}
 	}
 
@@ -461,6 +462,7 @@ end2:
 	//nop
 	return;
 }
+
 
 void Game::HandleEnemyMasterMove()
 {
@@ -603,9 +605,9 @@ void Game::HanldeEnemyWeaponMoves()
 		float x, y;
 		x = entity->m_sprite.getPosition().x;
 		y = entity->m_sprite.getPosition().y;
-		y += 1.0f;
+		x -= 1.0f;
 
-		if (y >= 600)
+		if (x <= 0)
 		{
 			entity->m_enabled = false;
 			_IsEnemyWeaponFired = false;
@@ -661,7 +663,15 @@ void Game::HandleEnemyWeaponFiring()
 		sw->m_size = _TextureWeaponEnemy.getSize();
 		EntityManager::m_Entities.push_back(sw);
 
+		// a little random...
+		int random = ((double)rand() / (RAND_MAX)) + 1;
+		if (random == 1) {
+		_IsEnemyWeaponFired = false;
 		_IsEnemyWeaponFired = true;
+		}else{
+		_IsEnemyWeaponFired = true;
+		}
+
 		break;
 	}
 }
@@ -741,7 +751,7 @@ void Game::HandleEnemyMoves()
 			x--;
 		entity->m_times++;
 
-		if (entity->m_times >= 100) //0)
+		if (entity->m_times >= 150) //0)
 		{
 			if (entity->m_bLeftToRight == true)
 			{
