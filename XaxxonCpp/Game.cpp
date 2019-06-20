@@ -28,7 +28,7 @@ Game::Game()
 	mTexture.loadFromFile("Media/Textures/fly.jpg");
 	_TextureEnemyMaster.loadFromFile("Media/Textures/boss.jpg");
 	_TextureEnemy.loadFromFile("Media/Textures/tank.jpg");
-	_TextureBlock.loadFromFile("Media/Textures/SI_Block.png");
+	_TextureBlock.loadFromFile("Media/Textures/bomker2.png");
 	_TextureBoom.loadFromFile("Media/Textures/boom.gif");
 	mFont.loadFromFile("Media/Sansation.ttf");
 
@@ -57,19 +57,51 @@ void Game::InitSprites()
 	_IsEnemyWeaponFired = false;
 	_IsPlayerWeaponFired = false;
 	_IsEnemyMasterWeaponFired = false;
+
 	//
-	// Player
+	// Enemies
 	//
 
-	mPlayer.setTexture(mTexture);
-	mPlayer.setPosition(10.f, 250.f);
-	std::shared_ptr<Entity> player = std::make_shared<Entity>();
-	player->m_sprite = mPlayer;
-	player->m_type = EntityType::player;
-	player->m_size = mTexture.getSize();
-	player->m_position = mPlayer.getPosition();
-	EntityManager::m_Entities.push_back(player);
+	for (int i = 0; i < SPRITE_COUNT_X; i++)
+	{
+		for (int j = 0; j < SPRITE_COUNT_Y; j++)
+		{
+			int r = ((double)rand() / (RAND_MAX)) + 1;
+			if (r==1) {
+				_Enemy[i][j].setTexture(_TextureEnemy);
+				_Enemy[i][j].setPosition(900.f + 50.f * (j + 1), 50.f * (i + 1));
 
+				std::shared_ptr<Entity> se = std::make_shared<Entity>();
+				se->m_sprite = _Enemy[i][j];
+				se->m_type = EntityType::enemy;
+				se->m_size = _TextureEnemy.getSize();
+				se->m_position = _Enemy[i][j].getPosition();
+				EntityManager::m_Entities.push_back(se);
+			}
+
+		}
+	}
+
+	//
+	// Blocks
+	//
+	
+	for (int i = 0; i < BLOCK_COUNT_X; i++)
+	{
+		for (int j = 0; j < BLOCK_COUNT_Y; j++)
+		{
+			_Block[i][j].setTexture(_TextureBlock);
+			_Block[i][j].setPosition(400.f + 200.f * (j + 1), 150.f * (i + 1));
+
+			std::shared_ptr<Entity> sb = std::make_shared<Entity>();
+			sb->m_sprite = _Block[i][j];
+			sb->m_type = EntityType::block;
+			sb->m_size = _TextureBlock.getSize();
+			sb->m_position = _Block[i][j].getPosition();
+			EntityManager::m_Entities.push_back(sb);
+
+		}
+	}
 	//
 	// Enemy Master
 	//
@@ -83,43 +115,20 @@ void Game::InitSprites()
 	sem->m_position = _EnemyMaster.getPosition();
 	EntityManager::m_Entities.push_back(sem);
 
-	//
-	// Enemies
-	//
-
-	for (int i = 0; i < SPRITE_COUNT_X; i++)
-	{
-		for (int j = 0; j < SPRITE_COUNT_Y; j++)
-		{
-			_Enemy[i][j].setTexture(_TextureEnemy);
-			_Enemy[i][j].setPosition(900.f + 50.f * (j + 1), 50.f * (i + 1));
-
-			std::shared_ptr<Entity> se = std::make_shared<Entity>();
-			se->m_sprite = _Enemy[i][j];
-			se->m_type = EntityType::enemy;
-			se->m_size = _TextureEnemy.getSize();
-			se->m_position = _Enemy[i][j].getPosition();
-			EntityManager::m_Entities.push_back(se);
-		}
-	}
 
 	//
-	// Blocks
+	// Player
 	//
 
-	/*for (int i = 0; i < BLOCK_COUNT; i++)
-	{
-		_Block[i].setTexture(_TextureBlock);
-		_Block[i].setPosition(0.f + 150.f * (i + 1), 10 + 350.f);
+	mPlayer.setTexture(mTexture);
+	mPlayer.setPosition(10.f, 250.f);
+	std::shared_ptr<Entity> player = std::make_shared<Entity>();
+	player->m_sprite = mPlayer;
+	player->m_type = EntityType::player;
+	player->m_size = mTexture.getSize();
+	player->m_position = mPlayer.getPosition();
+	EntityManager::m_Entities.push_back(player);
 
-		std::shared_ptr<Entity> sb = std::make_shared<Entity>();
-		sb->m_sprite = _Block[i];
-		sb->m_type = EntityType::block;
-		sb->m_size = _TextureBlock.getSize();
-		sb->m_position = _Block[i].getPosition();
-		EntityManager::m_Entities.push_back(sb);
-	}
-	*/
 
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setPosition(5.f, 5.f);
@@ -471,7 +480,7 @@ void Game::HandleEnemyMasterMove()
 
 		entity->m_times++;
 
-		if (y >= ((BLOCK_COUNT) * 80) || y <= 100)
+		if (y >= ((BLOCK_COUNT_X) * 80) || y <= 100)
 		{
 			if (entity->m_bLeftToRight == true)
 			{

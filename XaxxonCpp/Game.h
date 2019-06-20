@@ -3,7 +3,8 @@
 
 #define SPRITE_COUNT_X 10
 #define SPRITE_COUNT_Y 1
-#define BLOCK_COUNT 4
+#define BLOCK_COUNT_X 3
+#define BLOCK_COUNT_Y 2
 
 class Game
 {
@@ -73,7 +74,7 @@ private:
 	sf::Texture	_TextureEnemy;
 	sf::Sprite	_Enemy[SPRITE_COUNT_X][SPRITE_COUNT_Y];
 	sf::Texture	_TextureBlock;
-	sf::Sprite	_Block[BLOCK_COUNT];
+	sf::Sprite	_Block[BLOCK_COUNT_X][BLOCK_COUNT_Y];
 	sf::Texture	_TextureWeapon;
 	sf::Texture	_TextureWeaponEnemy;
 	sf::Texture	_TextureWeaponEnemyMaster;
