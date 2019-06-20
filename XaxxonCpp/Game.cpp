@@ -23,11 +23,11 @@ Game::Game()
 
 	_Map.loadFromFile("Media/Textures/bg.jpg");
 	_TextureWeapon.loadFromFile("Media/Textures/missile.png");
-	_TextureWeaponEnemy.loadFromFile("Media/Textures/SI_WeaponYellow.png");
-	_TextureWeaponEnemyMaster.loadFromFile("Media/Textures/SI_WeaponRed.png");
-	mTexture.loadFromFile("Media/Textures/fly.jpg");
-	_TextureEnemyMaster.loadFromFile("Media/Textures/boss.jpg");
-	_TextureEnemy.loadFromFile("Media/Textures/tank.jpg");
+	_TextureWeaponEnemy.loadFromFile("Media/Textures/rocket.png");
+	_TextureWeaponEnemyMaster.loadFromFile("Media/Textures/badshot.png");
+	mTexture.loadFromFile("Media/Textures/fly.png");
+	_TextureEnemyMaster.loadFromFile("Media/Textures/boss.png");
+	_TextureEnemy.loadFromFile("Media/Textures/tank.png");
 	_TextureBlock.loadFromFile("Media/Textures/bomker2.png");
 	_TextureBoom.loadFromFile("Media/Textures/boom.gif");
 	mFont.loadFromFile("Media/Sansation.ttf");
@@ -59,8 +59,15 @@ void Game::InitSprites()
 	_IsEnemyMasterWeaponFired = false;
 
 	//
-	// Enemies
+	// map
 	//
+		std::shared_ptr<Entity> sw = std::make_shared<Entity>();
+		sw->m_sprite.setTexture(_Map);
+		sw->m_sprite.setPosition(0.f, 0.f);
+		sw->m_type = EntityType::map;
+		sw->m_size = _Map.getSize();
+		EntityManager::m_Entities.push_back(sw);
+
 
 	for (int i = 0; i < SPRITE_COUNT_X; i++)
 	{

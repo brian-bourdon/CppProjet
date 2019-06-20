@@ -9,6 +9,7 @@ enum EntityType
 	enemy,
 	enemyMaster,
 	block,
+	map,
 	effect,
 };
 
