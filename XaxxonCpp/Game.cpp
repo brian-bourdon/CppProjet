@@ -26,9 +26,10 @@ Game::Game()
 	_TextureWeaponEnemy.loadFromFile("Media/Textures/SI_WeaponYellow.png");
 	_TextureWeaponEnemyMaster.loadFromFile("Media/Textures/SI_WeaponRed.png");
 	mTexture.loadFromFile("Media/Textures/fly.jpg");
-	_TextureEnemyMaster.loadFromFile("Media/Textures/SI_EnemyMaster.png");
-	_TextureEnemy.loadFromFile("Media/Textures/SI_Enemy.png");
+	_TextureEnemyMaster.loadFromFile("Media/Textures/boss.jpg");
+	_TextureEnemy.loadFromFile("Media/Textures/tank.jpg");
 	_TextureBlock.loadFromFile("Media/Textures/SI_Block.png");
+	_TextureBoom.loadFromFile("Media/Textures/boom.gif");
 	mFont.loadFromFile("Media/Sansation.ttf");
 
 	InitSprites();
@@ -51,6 +52,7 @@ void Game::InitSprites()
 {
 	_lives = 3;
 	_score = 0;
+	_bosslife = 200;
 	_IsGameOver = false;
 	_IsEnemyWeaponFired = false;
 	_IsPlayerWeaponFired = false;
@@ -129,7 +131,7 @@ void Game::InitSprites()
 
 	_LivesText.setFillColor(sf::Color::Green);
 	_LivesText.setFont(mFont);
-	_LivesText.setPosition(10.f, 50.f);
+	_LivesText.setPosition(10.f, 30.f);
 	_LivesText.setCharacterSize(20);
 	_LivesText.setString(std::to_string(_lives));
 
@@ -139,9 +141,19 @@ void Game::InitSprites()
 
 	_ScoreText.setFillColor(sf::Color::Green);
 	_ScoreText.setFont(mFont);
-	_ScoreText.setPosition(10.f, 100.f);
+	_ScoreText.setPosition(10.f, 50.f);
 	_ScoreText.setCharacterSize(20);
 	_ScoreText.setString(std::to_string(_score));
+
+	//
+	// bossLife
+	//
+	_BossLifeText.setFillColor(sf::Color::Red);
+	_BossLifeText.setFont(mFont);
+	_BossLifeText.setPosition(1000.f + 100.f, 10.f);
+	_BossLifeText.setCharacterSize(20);
+	_BossLifeText.setString(std::to_string(_bosslife));
+
 }
 
 void Game::run()
@@ -233,6 +245,7 @@ void Game::render()
 	mWindow.draw(mText);
 	mWindow.draw(_LivesText);
 	mWindow.draw(_ScoreText);
+	mWindow.draw(_BossLifeText);
 	mWindow.display();
 }
 
@@ -286,6 +299,8 @@ void Game::HandleTexts()
 	_LivesText.setString(lives);
 	std::string score = "Score: " + std::to_string(_score);
 	_ScoreText.setString(score);
+	std::string bosslife = "Boss life: " + std::to_string(_bosslife);
+	_BossLifeText.setString(bosslife);
 	return;
 }
 
@@ -750,7 +765,7 @@ void Game::HanldeWeaponMoves()
 		float x, y;
 		x = entity->m_sprite.getPosition().x;
 		y = entity->m_sprite.getPosition().y;
-		x--;
+		x++;
 
 		if (x <= 0)
 		{
@@ -898,12 +913,18 @@ void Game::HandleCollisionWeaponEnemyMaster()
 
 			if (boundWeapon.intersects(boundEnemy) == true)
 			{
-				enemy->m_enabled = false;
+					_bosslife -= 50;
+			
+				if (_bosslife <= 0) {
+					enemy->m_enabled = false;
+					_score += 100;
+				}
+
 				weapon->m_enabled = false;
 				_IsPlayerWeaponFired = false;
-				_score += 100;
 				//break;
 				goto end;
+				
 			}
 		}
 	}

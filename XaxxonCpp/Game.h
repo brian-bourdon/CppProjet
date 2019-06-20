@@ -56,6 +56,8 @@ private:
 	int _lives = 3;
 	sf::Text	_ScoreText;
 	int _score = 0;
+	sf::Text	_BossLifeText;
+	int _bosslife = 200;
 
 	std::size_t	mStatisticsNumFrames;
 	bool mIsMovingUp;
@@ -79,5 +81,6 @@ private:
 	sf::Texture	_TextureEnemyMaster;
 	sf::Sprite	_EnemyMaster;
 	sf::Texture	_Map;
+	sf::Texture _TextureBoom;
 };
 
