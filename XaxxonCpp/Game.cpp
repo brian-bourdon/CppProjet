@@ -218,8 +218,9 @@ void Game::processEvents()
 void Game::update(sf::Time elapsedTime)
 {
 	sf::Vector2f movement(0.f, 0.f);
-	if (mIsMovingUp)
+	if (mIsMovingUp) {
 		movement.y -= PlayerSpeed;
+	}
 	if (mIsMovingDown)
 		movement.y += PlayerSpeed;
 	if (mIsMovingLeft)
@@ -306,6 +307,7 @@ void Game::updateStatistics(sf::Time elapsedTime)
 		HandleEnemyMasterMove();
 		HandleEnemyWeaponFiring();
 		HandleEnemyMasterWeaponFiring();
+		HandleBox();
 	}
 }
 
@@ -582,6 +584,36 @@ void Game::HandleCollisionWeaponPlayer()
 			goto end;
 		}
 	}
+
+end:
+	//nop
+	return;
+}
+
+void Game::HandleBox()
+{
+
+		sf::FloatRect boundBox;
+		boundBox = sf::FloatRect(0, 0, 1240, 600);
+
+		sf::FloatRect boundPlayer;
+		float x = EntityManager::GetPlayer()->m_sprite.getPosition().x;
+		float y = EntityManager::GetPlayer()->m_sprite.getPosition().y;
+		if (y < boundBox.top)
+		{
+			EntityManager::GetPlayer()->m_sprite.setPosition(x, 600);
+			goto end;
+		}
+		if (x > boundBox.width)
+		{
+			EntityManager::GetPlayer()->m_sprite.setPosition(0, y);
+			goto end;
+		}
+		/*if (!boundBox.contains(x,y) == true)
+		{
+			EntityManager::GetPlayer()->m_sprite.setPosition(x,600);
+			goto end;
+		}*/
 
 end:
 	//nop

@@ -41,6 +41,7 @@ private:
 	void HandleGameOver();
 	void DisplayGameOver();
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+	void HandleBox();
 
 private:
 	static const float		PlayerSpeed;
