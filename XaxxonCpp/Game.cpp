@@ -795,7 +795,7 @@ void Game::HandleCollisionPlayerBlocks()
 
 			if (boundPlayer.intersects(boundBlock) == true)
 			{
-				//EntityManager::GetPlayer()->m_sprite.setPosition(EntityManager::GetPlayer()->m_sprite.getPosition().x - 10, EntityManager::GetPlayer()->m_sprite.getPosition().y);
+				EntityManager::GetPlayer()->m_sprite.setPosition(EntityManager::GetPlayer()->m_sprite.getPosition().x - 10, EntityManager::GetPlayer()->m_sprite.getPosition().y);
 				_lives--;
 				goto end3;
 			}
