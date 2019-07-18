@@ -542,13 +542,13 @@ void Game::HandleCollisionEnemyWeaponBlock()
 			sf::FloatRect boundBlock;
 			boundBlock = block->m_sprite.getGlobalBounds();
 
-			if (boundWeapon.intersects(boundBlock) == true)
+			/*if (boundWeapon.intersects(boundBlock) == true)
 			{
 				weapon->m_enabled = false;
 				_IsEnemyWeaponFired = false;
 				//break;
 				goto end2;
-			}
+			}*/
 		}
 	}
 
@@ -869,6 +869,7 @@ void Game::HanldeWeaponMoves()
 
 	for (std::shared_ptr<Entity> entity : EntityManager::m_Entities)
 	{
+
 		if (entity->m_enabled == false)
 		{
 			continue;
@@ -883,6 +884,10 @@ void Game::HanldeWeaponMoves()
 		x = entity->m_sprite.getPosition().x;
 		y = entity->m_sprite.getPosition().y;
 		x++;
+
+		if (_bosslife < 150) {
+			entity->m_sprite.setPosition(entity->m_sprite.getPosition().x-28, entity->m_sprite.getPosition().y);
+		}
 
 		if (x <= 0)
 		{
@@ -1042,6 +1047,7 @@ void Game::HandleCollisionWeaponEnemyMaster()
 
 				if (_bosslife < 150) {
 					enemy->m_sprite.setPosition(x - 200, y);
+					
 				}
 
 				weapon->m_enabled = false;
@@ -1098,9 +1104,8 @@ void Game::DisplayGameOver()
 		mText.setFont(mFont);
 		mText.setPosition(200.f, 200.f);
 		mText.setCharacterSize(80);
-
+		
 		mText.setString("GAME OVER");
-
 		_IsGameOver = true;
 	}
 	else
@@ -1111,14 +1116,18 @@ void Game::DisplayGameOver()
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-	if (key == sf::Keyboard::Up)
+	if (key == sf::Keyboard::Up) {
 		mIsMovingUp = isPressed;
-	else if (key == sf::Keyboard::Down)
+	}
+	else if (key == sf::Keyboard::Down) {
 		mIsMovingDown = isPressed;
-	else if (key == sf::Keyboard::Left)
+	}
+	else if (key == sf::Keyboard::Left) {
 		mIsMovingLeft = isPressed;
-	else if (key == sf::Keyboard::Right)
+	}
+	else if (key == sf::Keyboard::Right) {
 		mIsMovingRight = isPressed;
+	}
 
 	if (key == sf::Keyboard::Space)
 	{
