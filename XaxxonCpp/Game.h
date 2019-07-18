@@ -35,6 +35,7 @@ private:
 	void HandleCollisionBlockEnemy();
 	void HandleEnemyMoves();
 	void HanldeWeaponMoves();
+	void HandleCollisionPlayerBlocks();
 	void HandleCollisionWeaponBlock();
 	void HandleCollisionWeaponEnemy();
 	void HandleCollisionWeaponEnemyMaster();

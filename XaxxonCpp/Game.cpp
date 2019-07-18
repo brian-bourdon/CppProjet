@@ -299,6 +299,7 @@ void Game::updateStatistics(sf::Time elapsedTime)
 		HandleCollisionEnemyMasterWeaponBlock();
 		HandleCollisionEnemyMasterWeaponPlayer();
 		HandleCollisionBlockEnemy();
+		HandleCollisionPlayerBlocks();
 		HandleCollisionWeaponEnemyMaster();
 		HanldeWeaponMoves();
 		HanldeEnemyWeaponMoves();
@@ -592,32 +593,35 @@ end:
 
 void Game::HandleBox()
 {
-
+	
 		sf::FloatRect boundBox;
 		boundBox = sf::FloatRect(0, 0, 1240, 600);
 
 		sf::FloatRect boundPlayer;
-		float x = EntityManager::GetPlayer()->m_sprite.getPosition().x;
-		float y = EntityManager::GetPlayer()->m_sprite.getPosition().y;
-		if (y < boundBox.top)
-		{
-			EntityManager::GetPlayer()->m_sprite.setPosition(x, 600);
-			goto end;
-		}
-		if (x > boundBox.width)
-		{
-			EntityManager::GetPlayer()->m_sprite.setPosition(0, y);
-			goto end;
-		}
-		/*if (!boundBox.contains(x,y) == true)
-		{
-			EntityManager::GetPlayer()->m_sprite.setPosition(x,600);
-			goto end;
-		}*/
+			float x = EntityManager::GetPlayer()->m_sprite.getPosition().x;
+			float y = EntityManager::GetPlayer()->m_sprite.getPosition().y;
 
-end:
-	//nop
-	return;
+			if (y < boundBox.top)
+			{
+				EntityManager::GetPlayer()->m_sprite.setPosition(x, 600);
+				goto end;
+			}
+			if (x > boundBox.width)
+			{
+				EntityManager::GetPlayer()->m_sprite.setPosition(0, y);
+				goto end;
+			}
+			/*if (!boundBox.contains(x,y) == true)
+			{
+				EntityManager::GetPlayer()->m_sprite.setPosition(x,600);
+				goto end;
+			}*/
+
+
+		end:
+			//nop
+			return;
+			
 }
 
 void Game::HanldeEnemyWeaponMoves()
@@ -745,6 +749,54 @@ void Game::HandleCollisionBlockEnemy()
 			if (boundEnemy.intersects(boundBlock) == true)
 			{
 				EntityManager::GetPlayer()->m_enabled = false;
+				goto end3;
+			}
+		}
+	}
+
+end3:
+	//nop
+	return;
+}
+
+void Game::HandleCollisionPlayerBlocks()
+{
+	// Handle collision ennemy blocks
+
+	for (std::shared_ptr<Entity> mPlayer : EntityManager::m_Entities)
+	{
+		if (mPlayer->m_enabled == false)
+		{
+			continue;
+		}
+
+		if (mPlayer->m_type != EntityType::enemy)
+		{
+			continue;
+		}
+
+		for (std::shared_ptr<Entity> block : EntityManager::m_Entities)
+		{
+			if (block->m_type != EntityType::block)
+			{
+				continue;
+			}
+
+			if (block->m_enabled == false)
+			{
+				continue;
+			}
+
+			sf::FloatRect boundPlayer;
+			boundPlayer = EntityManager::GetPlayer()->m_sprite.getGlobalBounds();
+
+			sf::FloatRect boundBlock;
+			boundBlock = block->m_sprite.getGlobalBounds();
+
+			if (boundPlayer.intersects(boundBlock) == true)
+			{
+				//EntityManager::GetPlayer()->m_sprite.setPosition(EntityManager::GetPlayer()->m_sprite.getPosition().x - 10, EntityManager::GetPlayer()->m_sprite.getPosition().y);
+				_lives--;
 				goto end3;
 			}
 		}
