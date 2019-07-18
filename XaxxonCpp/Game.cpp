@@ -52,7 +52,7 @@ void Game::InitSprites()
 {
 	_lives = 3;
 	_score = 0;
-	_bosslife = 300;
+	_bosslife = 400;
 	_IsGameOver = false;
 	_IsEnemyWeaponFired = false;
 	_IsPlayerWeaponFired = false;
@@ -647,16 +647,35 @@ void Game::HanldeEnemyWeaponMoves()
 		x = entity->m_sprite.getPosition().x;
 		y = entity->m_sprite.getPosition().y;
 		x -= 1.0f;
-
 		if (x <= 0)
 		{
 			entity->m_enabled = false;
 			_IsEnemyWeaponFired = false;
 		}
+		if (_bosslife <= 350) {
+			entity->m_sprite.setPosition(x - 1, y);
+		}
+		else if (_bosslife <= 300) {
+			entity->m_sprite.setPosition(x - 2, y);
+		}
+		else if (_bosslife <= 250) {
+			entity->m_sprite.setPosition(x - 3, y);
+		}
+		else if (_bosslife <= 200) {
+			entity->m_sprite.setPosition(x - 4, y);
+		}
+		else if (_bosslife <= 150) {
+			entity->m_sprite.setPosition(x-5,y);
+		}
+		else if (_bosslife <= 100) {
+			entity->m_sprite.setPosition(x - 8, entity->m_sprite.getPosition().y);
+		}
 		else
 		{
 			entity->m_sprite.setPosition(x, y);
 		}
+
+
 
 	}
 }
@@ -885,17 +904,14 @@ void Game::HanldeWeaponMoves()
 		y = entity->m_sprite.getPosition().y;
 		x++;
 
-		if (_bosslife < 150) {
-			entity->m_sprite.setPosition(entity->m_sprite.getPosition().x-28, entity->m_sprite.getPosition().y);
-		}
-
 		if (x <= 0)
 		{
 			entity->m_enabled = false;
 			_IsPlayerWeaponFired = false;
 		}
 
-		entity->m_sprite.setPosition(x, y);
+
+		else entity->m_sprite.setPosition(x, y);
 	}
 }
 
