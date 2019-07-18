@@ -606,6 +606,11 @@ void Game::HandleBox()
 		EntityManager::GetPlayer()->m_sprite.setPosition(x, 600);
 		goto end;
 	}
+	if (y > boundBox.height)
+	{
+		EntityManager::GetPlayer()->m_sprite.setPosition(x, 0);
+		goto end;
+	}
 	if (x > boundBox.width)
 	{
 		EntityManager::GetPlayer()->m_sprite.setPosition(0, y);
